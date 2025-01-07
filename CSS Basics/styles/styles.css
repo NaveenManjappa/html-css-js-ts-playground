@@ -1,0 +1,48 @@
+body {
+  margin: 10px;
+}
+
+p {
+  color: blue;
+}
+
+/* ID css selector */
+#products {
+  padding: 10px;
+}
+
+/* Class CSS selector */
+.product {
+  color: blue;
+}
+
+/* Attribute css selector
+a[target="_blank"] {
+  color:orange;
+}
+*/
+
+/* Attribute css selector with contains */
+/* a[href *="google"]{
+  color: orange;
+  font-size: 20px;
+} */
+
+/* Attribute css selector with starts with */
+/* a[href ^="https"]{
+  color: orange;
+  font-size: 20px;
+} */
+
+/* Attribute css selector with ends with */
+/* a[href $=".com"]{
+  color: orange;
+  font-size: 20px;
+} */
+
+/* Multiple attribute selectors */
+a[target="_blank"][href *="google"]{
+  color: orange;
+  font-size: 20px;
+}
+
