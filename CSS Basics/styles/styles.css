@@ -46,3 +46,72 @@ a[target="_blank"][href *="google"]{
   font-size: 20px;
 }
 
+/* all the direct descendent selector */
+#product p {
+  color: tomato;
+}
+
+/* only the direct descents */
+#course > p {
+  color: red;
+}
+
+/* Only the immediate sibling*/
+#course + p {
+  color: pink;
+}
+/* all general siblings */
+#course ~ p {
+  color:gold;
+}
+
+article :first-child {
+  font-size: 140%;
+  font-style: italic;
+}
+
+article p:first-of-type {
+  font-size: 140%;
+  font-style: italic;
+}
+
+ul li:nth-child(2n){
+  color: deeppink;
+}
+
+a:visited,
+a:link {
+  color: dodgerblue;
+}
+
+/* It's a good practise to use focus along side hover to handle keyboard shortcuts like tab */
+a:hover, a:focus {
+  color: deeppink;
+}
+
+/* 
+: pseudo classes help to style a particular state of an element
+:: pseudo elements help to style part of an element
+*/
+.pseudo {
+  color: black;
+}
+
+p::first-letter {
+  font-size: 140%;
+}
+
+p::first-line {
+  font-weight: bold;
+}
+
+::selection {
+  background-color: pink;
+}
+
+p::after {
+  content: '....';
+  display: block;
+}
+
+
