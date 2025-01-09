@@ -1,0 +1,39 @@
+/* CSS Specificity id-class&attribute-element*/
+h2 {
+  color: dodgerblue;
+}
+
+.highlight {
+  color: deeppink;
+}
+
+#products {
+  color: green;
+}
+
+.featured #products {
+  color: dodgerblue;
+}
+
+h2.heading#header,
+h2.heading#color {
+  color: deeppink;
+}
+
+p {
+  color: dodgerblue;
+  border: 1px solid black;
+}
+
+strong {
+  color: initial; /* Initial prevents the inheritance of the property*/
+  border: inherit; /* Inherit helps to inherit the property from its parent */
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  /* background-color: #dd64ec; */
+  /* background-color: rgba(214, 71, 190, 0.8); */
+  background-color: hsla(305, 54%, 55%, 0.8);
+}

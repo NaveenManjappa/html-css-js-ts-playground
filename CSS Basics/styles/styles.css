@@ -51,12 +51,12 @@ a[target="_blank"][href *="google"]{
   color: tomato;
 }
 
-/* only the direct descents */
+/*combinator - only the direct descents */
 #course > p {
   color: red;
 }
 
-/* Only the immediate sibling*/
+/* Only the immediate/adjacent sibling*/
 #course + p {
   color: pink;
 }
