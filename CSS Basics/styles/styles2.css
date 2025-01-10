@@ -1,0 +1,77 @@
+/* CSS Specificity id-class&attribute-element*/
+h2 {
+  color: dodgerblue;
+}
+
+.highlight {
+  color: deeppink;
+}
+
+#products {
+  color: green;
+}
+
+.featured #products {
+  color: dodgerblue;
+}
+
+h2.heading#header,
+h2.heading#color,
+h2.heading {
+  color: deeppink;
+}
+
+p {
+  color: dodgerblue;
+  border: 1px solid black;
+}
+
+strong {
+  color: initial; /* Initial prevents the inheritance of the property*/
+  border: inherit; /* Inherit helps to inherit the property from its parent */
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  /* background-color: #dd64ec; */
+  /* background-color: rgba(214, 71, 190, 0.8); */
+  background-color: hsla(305, 54%, 55%, 0.8);
+}
+
+.gradient {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(0deg, dodgerblue,yellow,tomato);
+}
+
+.radial-gradient {
+  width: 700px;
+  height: 200px;
+  background: radial-gradient(circle at top left,white,tomato);
+}
+
+.border {
+  width: 200px;
+  height: 200px;
+  background-color: royalblue;
+  margin-left: 25px;
+  border:1px solid red;
+  border-width: 5px 5px; /* trbl - top right bottom left*/
+  border-style: dashed dashed;
+  border-radius: 100%;
+}
+
+.shadow {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 100px;
+  margin-left: 125px;
+  background-color: gold;
+  box-shadow: 0 0 30px grey;
+}
+
+.shadow h2 {
+  color: white;
+  text-shadow: 3px 3px 5px rgba(0,0,0,0.7);
+}
