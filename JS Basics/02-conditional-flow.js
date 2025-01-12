@@ -87,8 +87,7 @@ while(k <= 10){
 //Exercise 1
 console.log('-----1-Find maximum of two numbers----');
 function findMaximum(number1,number2){
-  const maximum = number1 > number2 ? number1 : number2;
-  return maximum;
+  return  number1 > number2 ? number1 : number2;
 }
 
 console.log('Max:',findMaximum(0,1));
