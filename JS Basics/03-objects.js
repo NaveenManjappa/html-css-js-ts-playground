@@ -115,3 +115,34 @@ increase(number,marks);
 console.log('Number:',number);
 console.log('Marks:',marks.total);
 
+console.log('-----Enumerating object properties----');
+
+const circleObj = {//object literal
+  radius:1,
+  draw:function(){
+    console.log('draw');
+  }
+};
+
+for(let key in circleObj)
+  console.log(key);
+
+for(let key of Object.keys(circleObj))
+  console.log(key);
+
+for(let entry of Object.entries(circleObj))
+  console.log(entry);
+
+if('draw' in circleObj) console.log('Yes');
+
+console.log('-----Cloning an object----');
+const anotherCircleObj = {};
+// for(let key in circleObj)
+//   anotherCircleObj[key]=circleObj[key];
+// console.log(anotherCircleObj);
+
+// const otherCircleObj = Object.assign({color:'red'},circleObj);//copies properties and methods from one or more source objects into target object and combines them into one
+// console.log(otherCircleObj);
+
+const yetAnotherCircle = { ...circleObj };//Spread operator - gets all properties and methods and puts them into new object
+console.log(yetAnotherCircle);
