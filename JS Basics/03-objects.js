@@ -146,3 +146,50 @@ const anotherCircleObj = {};
 
 const yetAnotherCircle = { ...circleObj };//Spread operator - gets all properties and methods and puts them into new object
 console.log(yetAnotherCircle);
+
+console.log('-----Math object----');
+console.log('PI:',Math.PI);
+console.log('Floor:',Math.floor(1.97));//always round down to smallest integer
+console.log('Ceil:',Math.ceil(1.2));//always rounds up to the largest integer
+console.log('Round:',Math.round(1.5));
+console.log('Random:',Math.random()*(10-1)+1);
+
+console.log('-----String object----');
+//String primitive
+const message = 'This is my\n \'first\' message';
+
+//String object
+const anotherMsg = String('Hi');
+console.log('Length:',message.length);
+console.log('[]:',message[5]);
+console.log('Includes:',message.includes('Hi'));
+console.log('StartsWith:',message.startsWith('This'));
+console.log('EndsWith:',message.endsWith('ge'));
+console.log('IndexOf:',message.indexOf('first'));
+console.log('Replace:',message.replace('my','our'));
+console.log('UpperCase:',message.toUpperCase());
+console.log('Split:',message.split(' '));
+
+console.log('-----Template Literals----');
+const name = 'John';
+const msg = 
+`Hi ${name},
+
+Thank you for the offer.
+
+Regards,
+ABC`;
+console.log(msg);
+
+console.log('-----Date object----');
+const now = new Date();
+console.log('Now:',now);
+const date1 = new Date('Jan 14 2025 07:15');
+console.log('Date1:',date1);
+const date2 = new Date(2025,0,14,7);
+console.log('Date2:',date2);
+now.setFullYear(2024);
+console.log('Now:',now.toDateString());
+console.log('Now:',now.toTimeString());
+console.log('Now:',now.toISOString());
+console.log('Full Year:',now.getFullYear());
