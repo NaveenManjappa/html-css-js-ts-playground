@@ -27,3 +27,62 @@ const course = courses.find(function(course){//returns the first element that ma
   return course.name === 'a';
 });
 console.log('Find course:',course);
+
+console.log('------Arrow Functions------');
+const coursesA =[
+  { id:1,name:'a'},
+  { id:2,name:'b'}
+];
+
+console.log(coursesA.find(course => course.name === 'a'));
+
+console.log('------Removing elements------');
+const numbers1 = [1,2,3,4,5,6];
+const last = numbers1.pop();//removes and returns the last element
+console.log('Last:',last);
+
+const first = numbers1.shift();//removes and returns the first element
+console.log('First:',first);
+
+console.log(numbers1);
+console.log('Splice:',numbers1.splice(2,2));//removes/deletes the elements at given index
+
+console.log('------Emptying an array------');
+let numbers2 = [1,2,3,4,5,6,7];
+let another = numbers2;
+
+//Solution 1
+//numbers2 = [];
+
+//Solution 2
+//numbers2.length = 0;
+
+//Solution 3
+//numbers2.splice(0,numbers2.length);
+
+//Solution 4
+while(numbers2.length > 0)
+  numbers2.pop();
+
+console.log(numbers2);
+console.log(another);
+
+console.log('------Combining arrays------');
+const firstA = [1,2,3];
+const secondA = [4,5,6,7];
+
+const combined = firstA.concat(secondA);
+console.log('Combined:',combined);
+
+const slice = combined.slice(2,5);
+console.log('Slice:',slice);
+
+const spreadA = ['a',...firstA,'b',...secondA,'c'];
+console.log('Spread:',spreadA);
+
+console.log('------Iterating an array------');
+let numbers3 = [1,2,3,4,5,6,7];
+for(let number of numbers3)
+  console.log(number);
+
+numbers3.forEach((number,index)=> console.log(index,number));
