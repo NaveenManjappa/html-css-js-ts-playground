@@ -86,3 +86,37 @@ for(let number of numbers3)
   console.log(number);
 
 numbers3.forEach((number,index)=> console.log(index,number));
+
+console.log('------Joining array------');
+const numbers4 = [1,2,3,4,5,6];
+const joined = numbers4.join('-');
+console.log('Joined:',joined);
+
+const title = 'Creating an array in JavaScript';
+const parts = title.split(' ');
+console.log('Parts:',parts);
+const urlSlug = parts.join('-');
+console.log('UrlSlug:',urlSlug);
+
+console.log('------Sorting an array------');
+const numbers6 = [3,4,1,2];
+console.log(numbers6.sort());
+console.log('Numbers:',numbers6);
+console.log(numbers6.reverse());
+
+const coursesB = [
+  { id:1, name:'Node.js'},
+  { id:2, name:'javaScript.js'},
+  { id:3, name:'CSS'},
+  { id:4, name:'HTML' }
+];
+
+coursesB.sort((first,second)=>{
+  // > -> 1, < -> -1, === -> 0
+  const nameA = first.name.toUpperCase();
+  const nameB = second.name.toUpperCase();
+  console.log(nameA,nameB);
+  if(nameA < nameB) return -1;
+  if(nameA > nameB) return 1;
+  return 0;
+});
