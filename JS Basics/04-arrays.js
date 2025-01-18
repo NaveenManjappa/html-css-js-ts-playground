@@ -120,3 +120,35 @@ coursesB.sort((first,second)=>{
   if(nameA > nameB) return 1;
   return 0;
 });
+
+console.log('------Testing elements in array------');
+const numbers7 = [1,2,-3,4,5];
+const allPositive = numbers7.every(num => {
+  console.log(num);
+  return num >= 0;
+});
+console.log('AllPositive:',allPositive);
+
+const atleastOnePositive = numbers7.some(num => {
+  console.log(num);
+  return num >= 0;
+});
+console.log('AtleastOnePositive:',atleastOnePositive);
+
+console.log('------Filtering an array------');
+const filtered = numbers7.filter(n => n >= 0);
+console.log('Filtered:',filtered);
+
+console.log('------Mapping an array------');
+const items = filtered.map(n => '<li>' + n + '</li>');
+console.log('Items:',items);
+
+const html =`<ul> ${items.join('')} </ul>`;
+console.log('Html:',html);
+
+const itemObs = numbers7
+  .filter(n => n >=0 )
+  .map(n => ({ value: n }))
+  .filter(obj => obj.value > 1);
+
+console.log('ItemsObj:',itemObs);
