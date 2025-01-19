@@ -152,3 +152,13 @@ const itemObs = numbers7
   .filter(obj => obj.value > 1);
 
 console.log('ItemsObj:',itemObs);
+
+console.log('------Reducing an array------');
+const prices = [1,-2,3,4,5];
+let sum = 0;
+for(let price of prices)
+  sum += price;
+console.log('Sum:',sum);
+
+const totalPrice = prices.reduce((accumulator,currentValue) => accumulator + currentValue,0);
+console.log('TotalPrice:',totalPrice);
