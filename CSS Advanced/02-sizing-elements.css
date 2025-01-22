@@ -1,0 +1,18 @@
+*, *::before, *::after {
+  box-sizing: border-box;/*Applying this using universal selector ensures that width and height are calculated inclusive of padding and border */
+}
+body {
+  margin: 10px;
+}
+
+.box::before {
+  content: 'Hello';
+}
+.box {
+  width: 100px;/*by default the width and height properties are set for the content, They are applied to only block level elements. Inline elements don't respect the W and H values as display is set to Inline by default */
+  height: 100px;
+  background-color: gold;
+  /* padding: 10px 20px;
+  border: 10px solid orange; */
+  display: inline-block;
+}
