@@ -1,0 +1,49 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  height: 200vh;
+}
+
+.boxes {
+  border: 3px solid lightgray;
+  position: relative;
+}
+
+.box {
+  width: 20rem;
+  height:20rem;
+}
+
+.box-one {
+  background-color: gold;
+}
+
+/* .box-two {
+  background-color: tomato;
+  position: relative;
+  left:16rem;
+  bottom: 10rem;
+  z-index: -1;
+} */
+
+/* .box-two {
+  position: absolute;
+  background-color: tomato;
+  right: 0;
+  bottom: 0;
+} */
+
+.box-two {
+  background-color: tomato;
+  position: fixed;
+  top: 0;
+  left: 4rem;
+  right: 4rem;
+  width: auto;
+}
+
+.box-three {
+  background-color: dodgerblue;
+}

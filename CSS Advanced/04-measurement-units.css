@@ -1,0 +1,26 @@
+html {
+  font-size: 62.5%;
+}
+
+.box {
+  /* width: 150px;  */
+  /*By default the width of the block level elements is 100% and height is 0 */
+  /* height: 150px; */
+
+  /* Relative units */
+  /*50% of width of the parent*/
+  /* width: 50%;
+  height: 100%; */
+  /* width: 50vw;
+  height: 100vh; */
+
+  /*10 times the font size of the current element, if there is no font size then it gets inherited from the parent elements. The default font size for html element set by the browser is 16px*/
+  /* width: 10em;
+  height: 10em; */
+
+  /*10 times the font size of root element */
+  width: 15rem;
+  height: 100vh;
+  background-color: gold;
+  border-top: 3px solid orange;
+}
