@@ -109,4 +109,65 @@ function sayhi() {//attached the function to window object
 }
 window.sayhi();
 
+console.log('---------This keyword---------');
+//method -> obj
+//function -> global or window
+//regular function -> this refers to window object in the browser and global in node
+//function inside an object(method) -> this refers to the object
+//this refers to the object which is executing the function
+
+const video = {
+  title:'a',
+  tags:['x','y','z'],
+  start() {
+    console.log(this)
+  },
+  showTags() {
+    this.tags.forEach(function(tag){
+      console.log(this.title,tag);
+    },this)//callback function here outside the execution context of forEach,we can pass the outer this context to callback function of some methods which otherwise takes window object as default for this context
+  },
+  showTagsSelf() {
+    const self = this;
+    this.tags.forEach(function(tag) {
+      console.log('self',self.title,tag);
+    });
+  },
+  showTagsBind() {
+    this.tags.forEach(function(tag) {
+      console.log('Bind',this.title,tag);
+    }.bind(this))//using the bind method to provide/change the context for this
+  },
+  showTagsArrow() {
+    this.tags.forEach(tag => console.log('Arrow',this.title,tag));//arrow functions inherit the this context from the containing function
+  }
+};
+
+video.start();
+video.showTags();
+video.showTagsSelf();
+video.showTagsBind();
+video.showTagsArrow();
+
+//In Constructor function this refers to the object NEW keyword creates
+function Audio(title) {
+  this.title = title,
+  this.display = function() {
+    console.log(this);
+  }
+}
+
+const audio = new Audio('abc');
+audio.display();
+
+function playVideo(a,b) {
+  console.log(this);
+}
+
+playVideo();//this points to window object
+playVideo.call({ name:'John' },1,2);//calls the function with the passed context or object for this
+playVideo.apply({ name:'Mary' },[1,2,3]);//similar to call function but arguments are passed in an array
+playVideo.bind({ name: 'Dave' },1,2)();//bind returns a new function after setting the context for this
+
+
 
