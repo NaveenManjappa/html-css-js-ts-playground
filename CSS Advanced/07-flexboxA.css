@@ -1,0 +1,29 @@
+html{
+  font-size: 62.5%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  border: 3px solid lightgray;
+}
+
+.box {
+  flex-basis: 15rem;/*auto by default*/
+  /* flex-grow: 1; */
+  flex-shrink: 1;
+  flex: 1 1 15rem;/*shorthand for flex-grow flex-shrink flex-basis */
+  width: 10rem;
+  height: 10rem;
+  background-color: gold;
+  margin: 1rem;
+}
+
+.box-one {
+  /* align-self: flex-start; */
+  /*applicable only to flex items and overrides the align-items of parent*/
+  /* flex-grow: 2; */
+  /* flex-shrink: 0; */
+}
