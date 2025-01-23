@@ -1,0 +1,26 @@
+html {
+  font-size: 62.5%;
+}
+
+.tweet {
+  border: 3px solid lightgray;
+  overflow: hidden;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.avatar {
+  background-color: gold;
+  width: 10rem;
+  height: 10rem;
+  float: left;
+  margin-right: 0.5rem;
+}
+
+.clear {
+  clear: both;
+}
