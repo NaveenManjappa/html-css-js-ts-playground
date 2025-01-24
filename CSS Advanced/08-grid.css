@@ -1,0 +1,52 @@
+.container {
+  display: grid;
+  border: 2px solid lightgrey;
+  height: 90vh;
+  /*3*2 Grid*/
+  /* grid-template-rows: 100px 100px 100px;
+  grid-template-columns: 100px 100px; 
+  grid-template-rows: repeat(3,100px);
+  grid-template-columns: repeat(2,100px);
+  */
+  /* grid-template: repeat(3,100px) / repeat(2,100px); */
+
+  /* grid-template: repeat(3,100px) / 30% 70%; */
+  grid-template: 100px auto 100px / 30fr 70fr;
+
+  /* row-gap: 10px;
+  column-gap: 10px; */
+  gap: 10px;
+
+  /*Horizontal axis default value is stretch*/
+  /* justify-items: stretch;
+  align-items: stretch; */
+
+  /*Moves the grid inside its parent container*/
+  /* justify-content: center;
+  align-content: center; */
+
+  grid-template-areas: 
+                "header header"
+                "navbar main"
+                ".      footer"
+  ;
+}
+
+.box {
+  /* width: 5rem;
+  height: 5rem; */
+  background-color: gold;
+  
+}
+.box-one {
+  /*Placing the items */
+  grid-column: 1 / span 2;
+  /* grid-row: 2 / 4; */
+
+  /* start end*/
+  /* grid-area: 1 / 1 / 1 / 3; */
+}
+
+.box-four {
+  grid-area: footer;
+}
