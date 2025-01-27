@@ -1,0 +1,9 @@
+body {
+  /* background: url('./pics/parabolic-pentagon.svg'); */
+  background-color: #888;
+}
+
+span {
+  font-size: 2rem;
+  color: lightpink;
+}

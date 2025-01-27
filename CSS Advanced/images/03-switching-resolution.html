@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./03-switching-resolution.css">
+  <title>Switching Resolution</title>
+</head>
+<body>
+  <img src="./pics/meal.jpg" alt="A bowl of Salmon curry" class="meal"
+  srcset="./pics/meal.jpg 400w, ./pics/meal@2x.jpg 800w, ./pics/meal@3x.jpg 1200w"
+  sizes="
+  (max-width: 500px) 100vw,
+  (max-width: 700px) 50vw,
+  33vw
+  "
+  >
+</body>
+</html>
