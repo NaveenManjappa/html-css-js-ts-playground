@@ -35,3 +35,10 @@
   width: 100px;
   height: 100px;
 }
+
+.dotted-break {
+  display: inline-block;
+  width: 100%;
+  border-bottom: 3px dotted #333;
+  margin: 0 10px;
+}
