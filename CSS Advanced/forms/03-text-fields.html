@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+  <link rel="stylesheet" href="03-text-fields.css">
+  <title>Text Fields</title>
+</head>
+<body>
+  <form>
+    <input type="text" placeholder="country" list="countries" autocomplete="off">
+    <datalist id="countries">
+      <option data-value="1">India</option>
+      <option data-value="2">US</option>
+      <option data-value="3">UK</option>
+      <option data-value="4">Australia</option>
+      <option data-value="5">Germany</option>
+    </datalist>
+    <textarea n3e="comment" id="comment" cols="30" rows="10">Comment...</textarea>
+
+    <select>
+      <optgroup label="Front End Courses">
+        <option value="1">HTML</option>
+        <option value="2" selected>CSS</option>
+        <option value="3">JavaScript</option>
+      </optgroup>
+      
+      <optgroup label="Back End Courses">
+        <option value="4">Node JS</option>
+        <option value="5">Asp.Net Core</option>
+        <option value="6">Django</option>
+      </optgroup>
+      
+
+    </select>
+  </form>
+</body>
+</html>
