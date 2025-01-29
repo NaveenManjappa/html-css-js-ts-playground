@@ -9,6 +9,9 @@
 </head>
 <body>
   <form>
+    <input type="text" required name="" id="" placeholder="name" minlength="3" maxlength="25">
+    <input type="email" required name="" id="">
+    <input type="number" name="" id="" min="1" max="100" required>
     <input type="text" placeholder="country" list="countries" autocomplete="off">
     <datalist id="countries">
       <option data-value="1">India</option>
@@ -17,7 +20,7 @@
       <option data-value="4">Australia</option>
       <option data-value="5">Germany</option>
     </datalist>
-    <textarea n3e="comment" id="comment" cols="30" rows="10">Comment...</textarea>
+    <textarea name="comment" id="comment" cols="30" rows="10">Comment...</textarea>
 
     <select>
       <optgroup label="Front End Courses">
@@ -30,10 +33,49 @@
         <option value="4">Node JS</option>
         <option value="5">Asp.Net Core</option>
         <option value="6">Django</option>
-      </optgroup>
-      
+      </optgroup>   
 
     </select>
+
+    <div>
+      <input type="checkbox" checked id="front-end">
+      <label class="label-inline" for="front-end">Front-End</label>
+    </div>
+
+    <div>
+      <input type="checkbox" id="back-end">
+      <label class="label-inline" for="back-end">Back-End</label>
+    </div>
+
+    <div>
+      <input type="radio" name="membership" id="silver">
+      <label for="silver" class="label-inline">Silver</label>
+    </div>
+    <div>
+      <input type="radio" checked name="membership" id="gold">
+      <label for="gold" class="label-inline">Gold</label>
+    </div>
+
+    <input type="range" min="0" max="100" value="90">
+
+    <input type="file" multiple accept=".jpg, .png">
+
+    <fieldset>
+      <legend>Billing Address</legend>
+      <input type="text" name="" id="">
+      <input type="text" name="" id="">
+      <input type="text" name="" id="">
+    </fieldset>
+
+    <section>
+      <h3>Payment</h3>
+      <input type="text" name="" id="">
+      <input type="text" name="" id="">
+      <input type="text" name="" id="">
+    </section>
+
+    <input type="hidden" name="course-id" value="1234">
+    <button type="submit">Submit</button>
   </form>
 </body>
 </html>
