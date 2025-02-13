@@ -3,7 +3,7 @@ function Shape(color) {
 }
 
 Shape.prototype.duplicate = function() {
-  console.log('duplicate');
+  console.log('duplicate Shape');
 }
 
 function extend(Child,Parent) {
@@ -19,7 +19,7 @@ extend(Circle,Shape);
 
 Circle.prototype.duplicate = function() {
   Shape.prototype.duplicate.call(this);
-  console.log('circle duplicate');
+  console.log('duplicate Circle');
 }
 
 Circle.prototype.draw = function() {
@@ -31,6 +31,19 @@ function Square(size){
 }
 
 extend(Square,Shape);
+Square.prototype.duplicate = function() {
+  console.log('duplicate Square');
+}
 
 const s = new Shape();
 const c = new Circle(1,'red');
+
+const shapes = [
+  new Circle(1,'red'),
+  new Square(1)
+];
+
+for(let shape of shapes)
+{
+  shape.duplicate();//polymorphism
+}
