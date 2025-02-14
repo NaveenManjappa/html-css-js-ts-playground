@@ -25,5 +25,31 @@ function HTMLSelectElement(items = []){
 
 HTMLSelectElement.prototype = new HTMLElement();
 HTMLSelectElement.prototype.constructor = HTMLSelectElement;
+HTMLSelectElement.prototype.render = function(){
+ return `
+ <select>${this.items.map(item => `
+  <option>${item}</option>`).join('')}
+  </select>
+ `;
+}
 
-const htmlSelectElement = new HTMLSelectElement();
+const htmlSelectElement = new HTMLSelectElement([1,2,3]);
+
+
+function HtmlImageElement(src){
+  this.src = src;
+}
+
+HtmlImageElement.prototype = new HTMLElement();
+HtmlImageElement.prototype.constructor = HtmlImageElement;
+HtmlImageElement.prototype.render = function() {
+  return `<img src="${this.src}">`
+}
+
+const elements = [
+  new HTMLSelectElement([1,2,3]),
+  new HtmlImageElement('http://')
+];
+
+for(let element of elements)
+  console.log(element.render());
