@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Closures</title>
+</head>
+<body>
+  <h1 class="text-3xl font-bold underline py-2 text-center">Closures in JavaScript</h1>
+  <p class="text-lg text-gray-600 leading-loose mb-6 px-2">A closure is a function that can access and remember its lexical scope (the variables and parameters in its outer function) even after the outer function has finished executing. It's essentially a function bundled together with references to its surrounding state, allowing it to "remember" the environment in which it was created.</p>
+  <p class="text-lg text-gray-600 leading-loose mb-6 px-2">
+    At its heart, a closure is about a function remembering the environment (the lexical scope, its "backpack" 🎒 or "bubble" 🫧) in which it was created. This allows an inner function to access variables from its outer function(s) even after those outer functions have finished executing.
+
+This "memory" is not just a passive copy; it's a live link, enabling powerful patterns like data privacy, function factories, and reliable callbacks.
+  </p>
+  <script src="01-closures.js"></script>
+</body>
+</html>
