@@ -37,3 +37,29 @@ let orderLogger = createLogger('Order Service');
 
 authLogger('Login successful');
 orderLogger('Order placed!');
+
+//Module pattern
+let myModule = (function(){
+  let privateCounter = 0;
+
+  function privateIncrement(){
+    privateCounter++;
+  }
+
+  function publicGetCounter(){
+    return privateCounter;
+  }
+
+  function publicIncrement(){
+    privateIncrement();
+  }
+
+  return {
+    getCounter: publicGetCounter,
+    increment: publicIncrement
+  }
+})();
+
+myModule.increment();
+myModule.increment();
+console.log(myModule.getCounter());
