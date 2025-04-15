@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Grid Auto-Fill vs Auto-Fit</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      padding: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1, h2 {
+      color: #333;
+    }
+    
+    .description {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background-color: #f7f7f7;
+      border-radius: 4px;
+    }
+    
+    .container {
+      border: 2px solid #333;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      resize: horizontal;
+      overflow: auto;
+      min-width: 200px;
+      max-width: 100%;
+      background-color: #f0f0f0;
+    }
+    
+    .grid-auto-fill {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      /* In this code, `150px` represents the minimum width of each grid column. The `minmax(100px, 1fr)` means:
+      - Minimum width: 150px
+      - Maximum width: 1fr (one fraction of the available space)
+
+      Each column will be at least 100px wide, but can grow larger if there's extra space available. The height of the grid items is controlled separately by the `.item` class which sets `height: 100px`. */
+    }
+    
+    .grid-auto-fit {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    
+    .item {
+      height: 100px;
+      background-color: #3498db;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+    
+    .grid-lines {
+      position: relative;
+    }
+    
+    .grid-lines::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: repeating-linear-gradient(to right, 
+        transparent, 
+        transparent calc(100% / 6 - 1px), 
+        rgba(0, 0, 0, 0.1) calc(100% / 6 - 1px), 
+        rgba(0, 0, 0, 0.1) calc(100% / 6)
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .controls {
+      margin-bottom: 2rem;
+    }
+    
+    button {
+      padding: 0.5rem 1rem;
+      margin-right: 0.5rem;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #2980b9;
+    }
+    
+    .highlight {
+      background-color: #f39c12;
+    }
+    
+    .info-text {
+      font-style: italic;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>CSS Grid: auto-fill vs auto-fit</h1>
+  
+  <div class="description">
+    <p>This demo shows the difference between <code>auto-fill</code> and <code>auto-fit</code> in CSS Grid. Both create responsive layouts, but they handle empty space differently.</p>
+    <p><strong>Try resizing the containers</strong> by dragging their right edges to see how the grid columns respond.</p>
+  </div>
+  
+  <div class="controls">
+    <button id="addItem">Add Item</button>
+    <button id="removeItem">Remove Item</button>
+    <span class="info-text">Current item count: <span id="itemCount">4</span></span>
+  </div>
+  
+  <h2>auto-fill Example</h2>
+  <p>Creates as many columns as possible, including empty ones. Notice how empty columns still take space.</p>
+  <div class="container grid-auto-fill" id="autoFillContainer">
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+    <div class="item">Item 3</div>
+    <div class="item">Item 4</div>
+  </div>
+  
+  <h2>auto-fit Example</h2>
+  <p>Also creates columns, but collapses empty ones to zero width. The existing items expand to fill the available space.</p>
+  <div class="container grid-auto-fit" id="autoFitContainer">
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+    <div class="item">Item 3</div>
+    <div class="item">Item 4</div>
+  </div>
+
+  <script>
+    const autoFillContainer = document.getElementById('autoFillContainer');
+    const autoFitContainer = document.getElementById('autoFitContainer');
+    const addItemButton = document.getElementById('addItem');
+    const removeItemButton = document.getElementById('removeItem');
+    const itemCountElement = document.getElementById('itemCount');
+    
+    let itemCount = 4;
+    
+    function updateItemCount() {
+      itemCountElement.textContent = itemCount;
+    }
+    
+    addItemButton.addEventListener('click', () => {
+      itemCount++;
+      
+      // Add item to auto-fill container
+      const newItemFill = document.createElement('div');
+      newItemFill.className = 'item highlight';
+      newItemFill.textContent = `Item ${itemCount}`;
+      autoFillContainer.appendChild(newItemFill);
+      
+      // Add item to auto-fit container
+      const newItemFit = document.createElement('div');
+      newItemFit.className = 'item highlight';
+      newItemFit.textContent = `Item ${itemCount}`;
+      autoFitContainer.appendChild(newItemFit);
+      
+      updateItemCount();
+      
+      // Remove highlight after a moment
+      setTimeout(() => {
+        newItemFill.classList.remove('highlight');
+        newItemFit.classList.remove('highlight');
+      }, 1500);
+    });
+    
+    removeItemButton.addEventListener('click', () => {
+      if (itemCount > 1) {
+        // Remove last item from both containers
+        autoFillContainer.removeChild(autoFillContainer.lastElementChild);
+        autoFitContainer.removeChild(autoFitContainer.lastElementChild);
+        
+        itemCount--;
+        updateItemCount();
+      }
+    });
+  </script>
+</body>
+</html>

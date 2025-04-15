@@ -1,0 +1,17 @@
+/* How would you create a responsive layout using only CSS Grid that supports the following conditions, without using media queries?
+
+Automatically displays items in a single column on narrow viewports.
+
+Gradually increases the number of columns as the viewport widens.
+
+Maintains a minimum width for each grid item (say, 200px). */
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 15px;
+}
+
+.content {
+  background-color: gold;
+}
