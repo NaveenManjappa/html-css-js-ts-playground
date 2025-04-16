@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RxJS exhaustMap Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style> body { font-family: sans-serif; } button { padding: 10px; font-size: 16px; } </style>
+</head>
+<body>
+    <h1>RxJS exhaustMap Example</h1>
+    <p>Open the console (F12). Click the button multiple times quickly. Notice how clicks are ignored while the 'API call' is running.</p>
+    <button id="myButton">Click Me (Try Fast!)</button>
+
+    <script>
+        const { fromEvent, interval } = rxjs;
+        const { exhaustMap, map, take, tap } = rxjs.operators; // Changed to exhaustMap, added tap for clarity
+
+        const click$ = fromEvent(document.getElementById('myButton'), 'click');
+
+        const result$ = click$.pipe(
+            tap(() => console.log('--- Button Click Detected ---')), // Log every click BEFORE exhaustMap
+            exhaustMap((event) => { // Using exhaustMap here!
+                console.log(`>>> Starting new "API call" for click #${event.timeStamp.toFixed(0)} (Ignoring others until this completes)`);
+                // Return the inner observable
+                return interval(1000).pipe( // Make interval a bit longer (1s) to see effect clearly
+                    map(i => `Result from click #${event.timeStamp.toFixed(0)}: value ${i}`),
+                    take(3) // Let each simulated call emit 3 values (takes 3 seconds total)
+                );
+            })
+        );
+
+        console.log('Subscribing to results...');
+        const subscription = result$.subscribe({
+            next: value => console.log(value),
+            complete: () => console.log('Outer observable completed') // Still won't happen here
+        });
+
+        // Optional: Stop after a while
+        // setTimeout(() => {
+        //     console.log('Unsubscribing...');
+        //     subscription.unsubscribe();
+        // }, 15000);
+
+    </script>
+</body>
+</html>
