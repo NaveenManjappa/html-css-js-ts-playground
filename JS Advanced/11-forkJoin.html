@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RxJS forkJoin Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style> body { font-family: sans-serif; } </style>
+</head>
+<body>
+    <h1>RxJS forkJoin Example</h1>
+    <p>Open the console (F12). Waits for multiple simulated async operations (timers) to complete.</p>
+    <div id="output">Waiting for all operations to complete...</div>
+
+    <script>
+        const { forkJoin, of, timer } = rxjs; // forkJoin is a creation function
+        const { map, delay, startWith } = rxjs.operators; // Using startWith for clarity
+
+        // Simulate API call 1: completes after 1 second, returns 'Result A'
+        const source1$ = timer(1000).pipe(
+            map(() => 'Result A'),
+            startWith('Op 1 Started') // Show when it begins
+        );
+
+        // Simulate API call 2: completes after 3 seconds, returns 'Result B'
+        const source2$ = timer(3000).pipe(
+            map(() => 'Result B'),
+            startWith('Op 2 Started')
+        );
+
+        // Simulate API call 3: completes immediately (using 'of'), returns 'Result C'
+        const source3$ = of('Result C').pipe(
+            // Add slight delay just for simulation, 'of' completes synchronously otherwise
+            delay(100),
+            startWith('Op 3 Started')
+        );
+
+        console.log('Setting up forkJoin...');
+        const outputDiv = document.getElementById('output');
+
+        // Log individual source progress
+        source1$.subscribe(val => console.log('Source 1:', val));
+        source2$.subscribe(val => console.log('Source 2:', val));
+        source3$.subscribe(val => console.log('Source 3:', val));
+
+        // Use forkJoin with an array
+        console.log('\n--- Using forkJoin with Array ---');
+        const joinedArray$ = forkJoin([source1$, source2$, source3$]);
+
+        joinedArray$.subscribe({
+            next: resultsArray => {
+                const output = `forkJoin (Array) Results: [${resultsArray.join(', ')}]`;
+                console.log(output);
+                outputDiv.textContent = output;
+            },
+            error: err => console.error('forkJoin Error:', err), // Handle potential errors
+            complete: () => console.log('forkJoin (Array) completed.') // forkJoin itself completes after emitting
+        });
+
+
+        // Use forkJoin with an object (often more readable)
+        console.log('\n--- Using forkJoin with Object ---');
+        const joinedObject$ = forkJoin({
+            user: source1$, // Key 'user', value is last emission of source1$
+            cart: source2$, // Key 'cart', value is last emission of source2$
+            prefs: source3$ // Key 'prefs', value is last emission of source3$
+        });
+
+         joinedObject$.subscribe({
+            next: resultsObject => {
+                const output = `forkJoin (Object) Results: User=${resultsObject.user}, Cart=${resultsObject.cart}, Prefs=${resultsObject.prefs}`;
+                console.log(output);
+                // Update UI again if needed
+            },
+            error: err => console.error('forkJoin Error:', err),
+            complete: () => console.log('forkJoin (Object) completed.')
+        });
+
+        // Expected behavior:
+        // - Logs 'Op X Started' messages immediately or after short delay.
+        // - At ~1s, logs 'Source 1: Result A'.
+        // - At ~3s, logs 'Source 2: Result B'.
+        // - Only AFTER 3s (when the longest operation, source2$, completes), forkJoin emits.
+        // - forkJoin (Array) logs '[Result A, Result B, Result C]'
+        // - forkJoin (Object) logs 'User=Result A, Cart=Result B, Prefs=Result C'
+
+    </script>
+</body>
+</html>

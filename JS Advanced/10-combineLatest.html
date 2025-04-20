@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RxJS combineLatest Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style> body { font-family: sans-serif; } </style>
+</head>
+<body>
+    <h1>RxJS combineLatest Example</h1>
+    <p>Open the console (F12). Combines a slow (2s) and a fast (0.7s) interval.</p>
+    <div id="output">Waiting for initial values...</div>
+
+    <script>
+        const { combineLatest, interval, timer } = rxjs; // combineLatest is a creation function
+        const { map, take } = rxjs.operators;
+
+        // Source 1: Emits A0, A1, A2... every 2000ms (slow)
+        const slowSource$ = interval(2000).pipe(map(i => `A${i}`));
+
+        // Source 2: Emits B0, B1, B2... every 700ms (fast)
+        // Start slightly delayed to make observation clearer
+        const fastSource$ = timer(500, 700).pipe(map(i => `B${i}`));
+
+        console.log('Setting up combineLatest...');
+        const outputDiv = document.getElementById('output');
+
+        // Combine the latest values from both sources
+        const combined$ = combineLatest([slowSource$, fastSource$]);
+
+        const subscription = combined$.pipe(
+            take(15) // Limit the output for the example
+        ).subscribe({
+            next: ([latestSlow, latestFast]) => { // Destructure the array
+                const output = `Latest values: [${latestSlow}, ${latestFast}]`;
+                console.log(output);
+                outputDiv.textContent = output;
+            },
+            complete: () => {
+                console.log('combineLatest example completed (due to take(15))');
+                outputDiv.textContent += ' - COMPLETED';
+            }
+        });
+
+        // Expected behavior:
+        // - Nothing happens until ~2000ms (when slowSource$ emits A0)
+        // - At ~2000ms, fastSource$ has emitted B0, B1, B2. Output: [A0, B2]
+        // - At ~2100ms, fastSource$ emits B3. Output: [A0, B3]
+        // - At ~2800ms, fastSource$ emits B4. Output: [A0, B4]
+        // - At ~3500ms, fastSource$ emits B5. Output: [A0, B5]
+        // - At ~4000ms, slowSource$ emits A1. Output: [A1, B5] (fastSource$ hasn't emitted since B5)
+        // - At ~4200ms, fastSource$ emits B6. Output: [A1, B6]
+        // - ...and so on.
+
+    </script>
+</body>
+</html>
