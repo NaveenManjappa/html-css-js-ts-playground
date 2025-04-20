@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      button {
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+    </style>
+    <title>RxJs takeUntill</title>
+  </head>
+  <body>
+    <h1>RxJs takeUntil example</h1>
+    <div id="output"></div>
+    <button id="stopButton">Stop interval</button>
+
+    <script>
+      const { interval,fromEvent } = rxjs;
+      const { pipe,tap,takeUntil } = rxjs.operators;
+
+      const source$ = interval(1000);
+      const notifier$ = fromEvent(document.getElementById('stopButton'),'click').pipe(
+        tap(v => console.log('Stop button clicked'))
+      );
+
+      const result$ = source$.pipe(
+        tap(v => console.log(`Source emitted value: ${v}`)),
+        takeUntil(notifier$)
+      );
+
+      console.log('Subscribing to interval');
+
+      result$.subscribe({
+        next: value => {
+          console.log(`Result received: ${value}`);
+          document.getElementById('output').textContent=`Last value: ${value}`;
+        },
+        complete:() => {
+            console.log('Result completed because notifier emiited a value!');
+            document.getElementById('output').textContent +='- COMPLETED';
+        },
+        error: err => console.error(err)
+      });
+    </script>
+  </body>
+</html>

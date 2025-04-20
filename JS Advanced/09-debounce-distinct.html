@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      input {
+        font-size: 16px;
+        padding: 8px;
+        width: 300px;
+      }
+      div {
+        margin-top: 15px;
+      }
+    </style>
+    <title>Debounce and Dinstinctuntil</title>
+  </head>
+  <body>
+    <h1>RxJS debounceTime and Dinstinctuntil</h1>
+    <label for="myInput">Input field:</label>
+    <input type="text" id="myInput" placeholder="Type here..." />
+    <div id="rawOutput">Raw output:</div>
+    <div id="debouncedOutput">debounced and distinct output:</div>
+    <script>
+      const { fromEvent } = rxjs;
+      const { pipe, map, tap, debounceTime,distinctUntilChanged } = rxjs.operators;
+
+      const myInput = document.getElementById("myInput");
+      const rawOutput = document.getElementById("rawOutput");
+      const debouncedOutput = document.getElementById("debouncedOutput");
+      const input$ = fromEvent(myInput, "input");
+
+      const processedInput$ = input$.pipe(
+        map((event) => event.target.value),
+        tap((value) => {
+          rawOutput.textContent = `Raw input: ${value}`;
+        }),
+        debounceTime(3000),
+        distinctUntilChanged()
+      );
+
+      const subscription = processedInput$.subscribe((finalValue) => {
+        console.log('Processed value',finalValue);
+        debouncedOutput.textContent = `debounced and distinct output: ${v}`;
+      });
+     // setTimeout(() => subscription.unsubscribe(),10000);
+    </script>
+  </body>
+</html>
