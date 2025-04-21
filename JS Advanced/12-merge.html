@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RxJS merge Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style> body { font-family: sans-serif; } </style>
+</head>
+<body>
+    <h1>RxJS merge Example</h1>
+    <p>Open the console (F12). Merges emissions from a slow (1.5s) and a fast (0.6s) interval.</p>
+    <div id="output"></div>
+
+    <script>
+        const { merge, interval, timer } = rxjs; // merge is a creation function
+        const { map, take } = rxjs.operators;
+
+        // Source 1: Emits A0, A1... every 1500ms
+        const sourceA$ = interval(1500).pipe(map(i => `A${i}`));
+        // Source 2: Emits B0, B1... every 600ms
+        const sourceB$ = interval(600).pipe(map(i => `B${i}`));
+
+        console.log('Setting up merge...');
+        const outputDiv = document.getElementById('output');
+
+        const merged$ = merge(sourceA$, sourceB$);
+
+        const subscription = merged$.pipe(
+            take(15) // Limit output
+        ).subscribe({
+            next: value => {
+                console.log('Merged value:', value);
+                outputDiv.textContent = `Last value: ${value}`;
+            },
+            complete: () => {
+                console.log('Merge example completed (due to take(15))');
+                 outputDiv.textContent += ' - COMPLETED';
+            }
+        });
+        // Expected output: B0, B1, A0, B2, B3, B4, A1, B5, B6, B7, A2, B8, B9, B10, A3... (interleaved based on timing)
+    </script>
+</body>
+</html>

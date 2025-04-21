@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RxJS catchError Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style> body { font-family: sans-serif; } </style>
+</head>
+<body>
+    <h1>RxJS catchError Example</h1>
+    <p>Open the console (F12). An error will be thrown in the stream and caught.</p>
+    <div id="output"></div>
+
+    <script>
+        const { of, throwError, timer } = rxjs; // throwError creates an Observable that immediately errors
+        const { map, catchError, mergeMap } = rxjs.operators;
+
+        const outputDiv = document.getElementById('output');
+
+        // Simulate a stream that might fail
+        const potentiallyFailingSource$ = timer(500).pipe(
+            mergeMap(val => {
+                // Simulate a failure condition
+                if (Math.random() > -1) { // Let's make it always fail for demo
+                   console.log('--- Simulating error ---');
+                   // 'throwError' creates an Observable that emits an error notification
+                   return throwError(() => new Error('Network Error Simulation!'));
+                }
+                return of('Successful Data!');
+            })
+        );
+
+        const result$ = potentiallyFailingSource$.pipe(
+            catchError((error, caught$) => {
+                console.error('Caught error in stream:', error.message);
+                outputDiv.textContent = `Error handled: ${error.message}. Returning default.`;
+
+                // Handle the error: return a new Observable (e.g., with a default value)
+                return of('Default Value due to Error');
+
+                // --- Alternatively, you could re-throw the error (or a new one) ---
+                //throw new Error('Something bad happened, stopping stream.');
+                // --- Or return the source observable to potentially retry (used with retry operator) ---
+                // return caught$;
+            })
+        );
+
+        console.log('Subscribing to potentially failing source...');
+        result$.subscribe({
+            next: value => {
+                console.log('Result received:', value);
+                outputDiv.textContent = `Received: ${value}`;
+            },
+            error: err => {
+                // This will ONLY be called if catchError re-throws the error
+                console.error('Observer error handler:', err.message);
+                outputDiv.textContent = `Unhandled Error: ${err.message}`;
+            },
+            complete: () => {
+                 // This WILL be called if catchError returns a valid Observable (like of(...))
+                 console.log('Stream completed (potentially after error was handled).');
+            }
+        });
+
+    </script>
+</body>
+</html>
