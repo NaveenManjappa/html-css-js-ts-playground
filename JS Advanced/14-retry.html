@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RxJS retry Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style> body { font-family: sans-serif; } </style>
+</head>
+<body>
+    <h1>RxJS retry Example</h1>
+    <p>Open the console (F12). An operation will fail twice then succeed on retry.</p>
+    <div id="output">Attempting operation...</div>
+
+    <script>
+      const { defer, of, throwError, timer } = rxjs;
+      const { mergeMap, retry, tap, finalize } = rxjs.operators; // Added finalize
+
+      const outputDiv = document.getElementById('output');
+      let attemptCounter = 0;
+
+      const source$ = defer(() => {
+          attemptCounter++;
+          console.log(`--- Operation attempt #${attemptCounter} ---`);
+          outputDiv.textContent = `Attempting operation #${attemptCounter}...`;
+          return timer(500).pipe(
+               mergeMap(() => {
+                  if (attemptCounter < 3) {
+                      console.log(`Attempt #${attemptCounter} failed.`);
+                      return throwError(() => new Error(`Failed on attempt ${attemptCounter}`));
+                  } else {
+                      console.log(`Attempt #${attemptCounter} succeeded!`);
+                      return of(`Success Data (attempt ${attemptCounter})`);
+                  }
+              })
+          );
+      });
+
+
+      source$.pipe(
+          retry(2),
+          finalize(() => { // <-- Added finalize here
+              console.log('--- Stream Finalized (Completed, Errored, or Unsubscribed) ---');
+              outputDiv.style.border = '2px solid green'; // Visual cue
+          })
+      ).subscribe({
+          next: value => {
+              console.log('Observer received:', value);
+               outputDiv.textContent = `Success: ${value}`;
+          },
+          error: err => {
+              console.error('Observer error (all retries failed):', err.message);
+               outputDiv.textContent = `Failed after all retries: ${err.message}`;
+               // Finalize still runs even on error!
+          },
+          complete: () => {
+              console.log('Observer completed.');
+               // Finalize also runs on completion!
+          }
+      });
+
+  </script>
+</body>
+</html>
