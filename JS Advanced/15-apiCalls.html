@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RxJS API calls</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      button {
+        padding: 15px;
+        background-color: rgb(228, 192, 192);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>RxJS Handling multiple API calls</h1>
+    <button id="login">Login</button>
+    <button id="logout">Logout</button>
+
+    <script>
+      const { defer, of, throwError, fromEvent, timer, forkJoin,catchError } = rxjs;
+      const { mergeMap, map,switchMap, tap, finalize, pipe, take, takeUntil } =
+        rxjs.operators;
+
+      //Problem statement
+//       You're building a data dashboard in Angular where multiple API calls need to be made in parallel when a user logs in. Each call fetches a different part of the user's profile (e.g., personal info, settings, notifications, etc.). These APIs may take different times to respond.
+
+// You want to:
+
+// Trigger all calls simultaneously on login.
+
+// Wait until all the responses are in.
+
+// If one of the requests fails, you want to gracefully handle it (e.g., show an error but still render the data from the other successful calls).
+
+// You also want to cancel all requests if the user logs out before all calls complete.
+
+      const loginButton = document.getElementById("login");
+      const logoutButton = document.getElementById("logout");
+
+      const personalInfo$ = timer(1000).pipe(
+        map((v) => `PersonalInfo${v}`),
+        catchError((err) => of("Error:Personal info api failed"))
+      );
+      const notification$ = timer(2000).pipe(
+        // map((v) => `Notification${v}`),
+        mergeMap((v) => throwError(() => 'Notification api gailed')),
+        catchError((err) => of("Error:Notification api failed"))
+      );
+      const login$ = fromEvent(loginButton, "click");
+      const logout$ = fromEvent(logoutButton, "click");
+
+      login$.pipe(
+        switchMap(() => {
+          return forkJoin({
+            personalInfo: personalInfo$,
+            notification: notification$,
+          });
+        }),
+        takeUntil(logout$)
+      ).subscribe({
+        next: (res) => console.log(res),
+        error: (err) => console.log(err),
+        complete:() => console.log('API calls completed/cancelled')
+      });
+    </script>
+  </body>
+</html>
