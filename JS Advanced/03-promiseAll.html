@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise All</title>
+</head>
+<body>
+  
+  <script>
+    function createDelayedPromise(value,delay,shouldReject=false){
+      return new Promise((resolve,reject) => {
+        setTimeout(() =>{
+          if(shouldReject){
+            console.log(`Promise for ${value} is rejecting after ${delay}ms`);
+            reject(new Error(`Failed to get ${value}`));
+          }
+          else {
+            console.log(`Promise for ${value} is resolving after ${delay}ms`);
+            resolve(value);
+          }
+        },delay);
+      });
+    }
+
+    const p1 = createDelayedPromise('Data A',1500);
+    const p2 = createDelayedPromise('Data B',500);
+    const p3 = createDelayedPromise('Data C',1000);
+
+    const p4 =createDelayedPromise('Data D',1200,true);
+
+    console.log('Starting all promises');
+    Promise.all([p1,p2,p3,p4])
+      .then(results => {
+        console.log('Promise all fulfilled');
+        console.log('Results:',results);
+      })
+      .catch(error => {
+        console.log('Promise all rejected');
+        console.error('Reason:',error.message);
+      });
+
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise Race</title>
+</head>
+<body>
+  
+  <script>
+    function createDelayedPromise(value,delay,shouldReject=false){
+      return new Promise((resolve,reject) => {
+        setTimeout(() =>{
+          if(shouldReject){
+            console.log(`Promise for ${value} is rejecting after ${delay}ms`);
+            reject(new Error(`Failed to get ${value}`));
+          }
+          else {
+            console.log(`Promise for ${value} is resolving after ${delay}ms`);
+            resolve(value);
+          }
+        },delay);
+      });
+    }
+
+    console.log('Racing all promises');
+    
+    //Promise.race
+    const pSlow = createDelayedPromise('Slow data',1500);
+    const pMedium=createDelayedPromise('Medium data',1000);
+    const pFast=createDelayedPromise('Fast data',500);
+
+   const pFastReject = createDelayedPromise('Fast reject',300,true);
+
+    Promise.race([pSlow,pMedium,pFast,pFastReject])
+    .then(winner=>{
+      console.log('Promise race finished');
+      console.log('Winner',winner);
+    })
+    .catch(error => {
+      console.log('Promise race finished with error');
+      console.log('Error:',error.message);
+    })
+  </script>
+</body>
+</html>
