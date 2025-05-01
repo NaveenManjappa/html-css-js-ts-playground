@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currying in JS</title>
+</head>
+<body>
+  <script>
+    function add(a,b,c,d){
+      
+      return a+b+c;
+    }
+
+    function curriedAdd(a){
+      return function(b){
+        return function(c){
+          return a+b+c;
+        }
+      }
+    }
+
+    console.log('Add:',add(1,2,3));
+    console.log('Curried Add:',curriedAdd(1)(2)(3));
+    console.log(add.length);
+
+    function curriedFormatLog(timestamp){
+      return function(level){
+        return function(message){
+          return `[${timestamp}] [${level.toUpperCase()}]: ${message}`;
+        }
+      }
+    }
+
+   const msg= curriedFormatLog('2025-05-01 17:20:00')('info')('User logged in');
+   console.log(msg);
+  </script>
+</body>
+</html>
