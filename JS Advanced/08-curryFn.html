@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curry function</title>
+</head>
+<body>
+  <script>
+    function curry(fn){
+      const arity = fn.length;
+      return function curried(...args){
+        if(args.length >= arity){
+          return fn.apply(this,args);
+        }
+        else {
+          return function(...nextArgs){
+            return curried.apply(this,args.concat(nextArgs));
+          }
+        }
+      }
+    }
+
+   function add(a,b,c){
+    return a + b + c;
+   }
+   
+   const curriedAdd = curry(add);
+   console.log(curriedAdd(1)(2)(3));
+   console.log(curriedAdd(1)(2,3));
+   console.log(curriedAdd(1)(2)(3));
+
+   function calculateVolume(length,width,height){
+    return length * width * height;
+   }
+
+   const curriedVolume = curry(calculateVolume);
+   const curriedVolumeAddLen = curriedVolume(10);
+   const curriedVolumeAddWidth = curriedVolumeAddLen(5);
+   const totalVolume = curriedVolumeAddWidth(2);
+   console.log(totalVolume);
+
+  </script>
+</body>
+</html>
