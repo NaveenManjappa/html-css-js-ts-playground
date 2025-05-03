@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logging Utility</title>
+</head>
+<body>
+  <script>
+    
+    function log(level,module,message){
+      const timeStamp = new Date().toISOString();
+      console.log(`[${timeStamp}] [${level.toUpperCase()}] [${module}] ${message}`);
+    }
+
+    function curry(fn){
+      const arity = fn.length;
+
+      return function curried(...args){
+        if(args.length >= arity){
+          return fn.apply(this,args);
+        }
+        else {
+          return function(...nextArgs){
+            return curried.apply(this,args.concat(nextArgs));
+          }
+        }
+      };
+    }
+
+    const curriedLog = curry(log);
+    const logInfo =curriedLog('info')
+    const logWarn = curriedLog('warn');
+    const logError = curriedLog('error');
+
+    const authInfoLogger = logInfo('AuthService');
+    const paymentWarnLogger = logWarn('PaymentService');
+    const dbErrorLogger = logError('Database');
+
+    authInfoLogger('User login attempt');
+    paymentWarnLogger('Credit card expiring soon');
+    dbErrorLogger('Connection failed');
+
+  </script>
+</body>
+</html>
