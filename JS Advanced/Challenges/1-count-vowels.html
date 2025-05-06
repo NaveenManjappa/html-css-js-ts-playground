@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Count Vowels</title>
+</head>
+<body>
+  <script>
+
+    function countVowels(str){
+      const vowels = ['a','e','i','o','u'];
+      let count = 0;
+
+      console.log(str.toLowerCase());
+      
+      str.toLowerCase().split('').forEach(element => {
+        //console.log(str.toLowerCase().split(''));        
+        
+        for(let i=0;i<vowels.length;i++){
+          if(vowels[i] === element)
+            count++;
+        }
+
+      });
+
+      return count;
+    }
+
+   console.log(countVowels('hello we aeiou'));//O(n)
+
+   function countVowels2(str){
+    const vowels = new Set(['a','e','i','o','u']);
+    let count=0;
+    for(let ch of str.toLowerCase()){
+      if(vowels.has(ch)){
+        count++;
+      }
+    }
+    return count;
+   }
+
+   console.log(countVowels2('hello we aeiou'));//O(n)
+  </script>
+</body>
+</html>
