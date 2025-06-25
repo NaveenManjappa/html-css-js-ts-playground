@@ -5,8 +5,7 @@ function once(fn){
     if(called)
       return result;
     else{
-      try {
-        
+      try {        
        result = fn.apply(this,args);
        called =true;
        return result;
